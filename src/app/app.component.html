@@ -1,0 +1,221 @@
+<header class="site-header">
+  <a class="brand" href="#inicio" aria-label="Ir al inicio">
+    <span class="brand-mark" aria-hidden="true">✦</span>
+    <span>{{ veterinaria?.nombre || 'Centro Veterinario' }}</span>
+  </a>
+  <nav aria-label="Navegación principal">
+    <a href="#servicios">Servicios</a>
+    <a href="#especialidades">Especialidades</a>
+    <a href="#nosotros">Nosotros</a>
+    <a href="#precios">Precios</a>
+    <a class="nav-contact" href="#contacto">Contáctanos</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" id="inicio">
+    <video class="hero-video" autoplay loop muted playsinline poster="https://images.pexels.com/photos/6235233/pexels-photo-6235233.jpeg" aria-hidden="true">
+      <source src="https://videos.pexels.com/video-files/3195394/3195394-hd_1920_1080_25fps.mp4" type="video/mp4">
+    </video>
+    <div class="hero-shade"></div>
+    <div class="hero-content">
+      <span class="eyebrow light">CUIDADO CON TODO EL CORAZÓN</span>
+      <h1>Su bienestar,<br>nuestra <em>vocación.</em></h1>
+      <p>Un espacio de cuidado cercano y profesional para quienes hacen de tu vida algo mejor.</p>
+      <div class="hero-actions">
+        <a class="button button-primary" href="#servicios">Conoce nuestros servicios <span aria-hidden="true">→</span></a>
+        <a class="button button-outline" href="#contacto">Hablemos</a>
+      </div>
+    </div>
+    <span class="hero-note">CUIDAMOS DE TODAS SUS HUELLAS</span>
+  </section>
+
+  <section class="intro section-wrap">
+    <div class="intro-symbol" aria-hidden="true">✳</div>
+    <div>
+      <span class="eyebrow">CUIDADO VETERINARIO CERCANO</span>
+      <h2>Cada mascota merece<br>sentirse <em>como en casa.</em></h2>
+    </div>
+    <p>Atención responsable, con cariño y respeto por cada etapa de su vida. Estamos aquí para acompañarles.</p>
+  </section>
+
+  <section class="section section-tint" id="servicios">
+    <div class="section-wrap">
+      <div class="section-heading">
+        <div><span class="eyebrow">LO QUE HACEMOS</span><h2>Atención para cada <em>necesidad.</em></h2></div>
+        <p>Servicios pensados para cuidar su salud y bienestar, en cada momento.</p>
+      </div>
+      @if (loading.servicios) { <p class="state-message">Cargando servicios…</p> }
+      @else if (errors['servicios']) { <p class="state-message error">{{ errors['servicios'] }}</p> }
+      @else if (!servicios.length) { <p class="state-message">No hay servicios disponibles por el momento.</p> }
+      @else {
+        <div class="service-grid">
+          @for (servicio of servicios; track servicio.id) {
+            <article class="service-card">
+              <img [src]="servicio.imageUrl || 'https://images.pexels.com/photos/6235233/pexels-photo-6235233.jpeg'" [alt]="servicio.nombre" loading="lazy">
+              <div class="service-card-body">
+                <span class="card-icon" aria-hidden="true">✦</span>
+                <span class="eyebrow">{{ servicio.icon || 'CUIDADO' }}</span>
+                <h3>{{ servicio.nombre }}</h3>
+                <p>{{ servicio.descripcion }}</p>
+                <a href="#contacto" class="text-link">Consultar <span aria-hidden="true">↗</span></a>
+              </div>
+            </article>
+          }
+        </div>
+      }
+    </div>
+  </section>
+
+  <section class="section section-wrap" id="especialidades">
+    <div class="section-heading">
+      <div><span class="eyebrow">NUESTRA EXPERIENCIA</span><h2>Cuidado que va más <em>allá.</em></h2></div>
+      <p>Un equipo que busca dar a cada paciente una atención integral y especializada.</p>
+    </div>
+    @if (loading.especialidades) { <p class="state-message">Cargando especialidades…</p> }
+    @else if (errors['especialidades']) { <p class="state-message error">{{ errors['especialidades'] }}</p> }
+    @else if (!especialidades.length) { <p class="state-message">No hay especialidades disponibles por el momento.</p> }
+    @else {
+      <div class="specialty-grid">
+        @for (especialidad of especialidades; track especialidad.id) {
+          <article class="specialty-card">
+            <img [src]="especialidad.imageUrl || 'https://images.pexels.com/photos/7469214/pexels-photo-7469214.jpeg'" [alt]="especialidad.nombre" loading="lazy">
+            <div><span class="eyebrow">ATENCIÓN ESPECIALIZADA</span><h3>{{ especialidad.nombre }}</h3><p>{{ especialidad.descripcion }}</p></div>
+          </article>
+        }
+      </div>
+    }
+  </section>
+
+  <section class="about section-tint" id="nosotros">
+    <div class="about-image"><img src="https://images.pexels.com/photos/6235233/pexels-photo-6235233.jpeg" alt="Atención veterinaria cercana a una mascota" loading="lazy"><span class="image-stamp">CUIDAR<br>ES AMAR</span></div>
+    <div class="about-copy">
+      <span class="eyebrow">UN LUGAR PARA SENTIRSE EN CONFIANZA</span>
+      @if (loading.veterinaria) { <p class="state-message">Cargando información…</p> }
+      @else if (errors['veterinaria']) { <p class="state-message error">{{ errors['veterinaria'] }}</p> }
+      @else if (veterinaria) {
+        <h2>{{ veterinaria.nombre }}<br><em>cuida de los suyos.</em></h2>
+        <p class="about-lead">{{ veterinaria.descripcion }}</p>
+        <div class="about-details">
+          <div><h3>Nuestra historia</h3><p>{{ veterinaria.historia }}</p></div>
+          <div><h3>Nuestra misión</h3><p>{{ veterinaria.mision }}</p></div>
+          <div><h3>Nuestra visión</h3><p>{{ veterinaria.vision }}</p></div>
+          <div><h3>Lo que nos guía</h3><p>{{ veterinaria.valores }}</p></div>
+        </div>
+        <a class="text-link" href="#contacto">Ven a conocernos <span aria-hidden="true">↗</span></a>
+      }
+    </div>
+  </section>
+
+  <section class="section section-wrap gallery-section" id="galeria">
+    <div class="section-heading">
+      <div><span class="eyebrow">UN VISTAZO A NUESTRO MUNDO</span><h2>Momentos que <em>cuidamos.</em></h2></div>
+      <p>Un poco del cariño que compartimos en cada visita.</p>
+    </div>
+    @if (loading.galeria) { <p class="state-message">Cargando galería…</p> }
+    @else if (errors['galeria']) { <p class="state-message error">{{ errors['galeria'] }}</p> }
+    @else if (!galeria.length) { <p class="state-message">Aún no hay imágenes disponibles.</p> }
+    @else {
+      <div class="gallery-grid">
+        @for (foto of galeria; track foto.id) {
+          <button type="button" class="gallery-item" (click)="selectedPhoto = foto" [attr.aria-label]="'Ampliar foto: ' + foto.titulo">
+            <img [src]="foto.imageUrl" [alt]="foto.descripcion || foto.titulo" loading="lazy"><span>{{ foto.titulo }} <b aria-hidden="true">↗</b></span>
+          </button>
+        }
+      </div>
+    }
+  </section>
+
+  <section class="section section-tint" id="precios">
+    <div class="section-wrap">
+      <div class="section-heading">
+        <div><span class="eyebrow">TRANSPARENCIA Y CONFIANZA</span><h2>Precios con <em>claridad.</em></h2></div>
+        <p>Los precios son demostrativos y pueden variar. Escríbenos para confirmar el costo de atención.</p>
+      </div>
+      @if (loading.precios) { <p class="state-message">Cargando precios…</p> }
+      @else if (errors['precios']) { <p class="state-message error">{{ errors['precios'] }}</p> }
+      @else if (!precios.length) { <p class="state-message">No hay precios registrados. Consulta directamente con la veterinaria.</p> }
+      @else {
+        <div class="price-list">
+          @for (precio of precios; track precio.servicioId) {
+            <div class="price-row">
+              <div><h3>{{ precio.serviceName }}</h3><p>{{ precio.note || 'Precio demostrativo. Confirma su vigencia.' }}</p></div>
+              <strong>{{ precio.price === null ? 'Consultar precio' : 'Bs. ' + (+precio.price | number:'1.2-2') }}</strong>
+            </div>
+          }
+        </div>
+      }
+      <p class="price-disclaimer">Los valores registrados son de referencia y no constituyen una cotización definitiva.</p>
+    </div>
+  </section>
+
+  <section class="contact-section" id="contacto">
+    <div class="section-wrap contact-layout">
+      <div class="contact-copy">
+        <span class="eyebrow light">ESTAMOS PARA ACOMPAÑARTE</span>
+        <h2>Hablemos de<br>su <em>bienestar.</em></h2>
+        <p>Déjanos tu mensaje. Nuestro equipo se pondrá en contacto contigo.</p>
+        @if (veterinaria) {
+          <div class="contact-info">
+            <div><span aria-hidden="true">⌖</span><p>{{ veterinaria.direccion }}</p></div>
+            <div><span aria-hidden="true">☎</span><p><a [href]="'tel:' + veterinaria.telefono">{{ veterinaria.telefono }}</a></p></div>
+            <div><span aria-hidden="true">✉</span><p><a [href]="'mailto:' + veterinaria.correo">{{ veterinaria.correo }}</a></p></div>
+            <div><span aria-hidden="true">◷</span><p>{{ veterinaria.horarioAtencion }}</p></div>
+            @if (veterinaria.mapaUrl) { <a class="map-link" [href]="veterinaria.mapaUrl" target="_blank" rel="noopener noreferrer">Ver ubicación en mapas ↗</a> }
+            @if (veterinaria.whatsapp) { <a class="map-link" [href]="'https://wa.me/' + veterinaria.whatsapp" target="_blank" rel="noopener noreferrer">Escríbenos por WhatsApp ↗</a> }
+          </div>
+        }
+      </div>
+      <form class="contact-form" [formGroup]="contactForm" (ngSubmit)="enviarContacto()">
+        <h3>Envíanos un mensaje</h3>
+        <div class="form-pair">
+          <label>Nombre completo<input formControlName="nombre" autocomplete="name" placeholder="Tu nombre"><small>@if (contactForm.controls.nombre.touched && contactForm.controls.nombre.invalid) { Escribe al menos 2 caracteres. }</small></label>
+          <label>Correo electrónico<input formControlName="correo" type="email" autocomplete="email" placeholder="nombre@correo.com"><small>@if (contactForm.controls.correo.touched && contactForm.controls.correo.invalid) { Ingresa un correo válido. }</small></label>
+        </div>
+        <div class="form-pair">
+          <label>Teléfono <span>(opcional)</span><input formControlName="telefono" type="tel" autocomplete="tel" placeholder="+591"></label>
+          <label>Asunto<input formControlName="asunto" placeholder="¿En qué podemos ayudarte?"><small>@if (contactForm.controls.asunto.touched && contactForm.controls.asunto.invalid) { El asunto es obligatorio. }</small></label>
+        </div>
+        <label>Mensaje<textarea formControlName="mensaje" rows="4" placeholder="Cuéntanos un poco más…"></textarea><small>@if (contactForm.controls.mensaje.touched && contactForm.controls.mensaje.invalid) { Escribe un mensaje de al menos 10 caracteres. }</small></label>
+        @if (contactSuccess) { <p class="form-success" role="status">¡Gracias! Tu mensaje fue registrado correctamente.</p> }
+        @if (contactError) { <p class="form-error" role="alert">{{ contactError }}</p> }
+        <button class="button button-primary submit-button" type="submit" [disabled]="contactSending">{{ contactSending ? 'Enviando…' : 'Enviar mensaje' }} <span aria-hidden="true">→</span></button>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <a class="brand footer-brand" href="#inicio"><span class="brand-mark" aria-hidden="true">✦</span><span>{{ veterinaria?.nombre || 'Centro Veterinario' }}</span></a>
+  <p>Un cuidado que se siente. © {{ 2026 }} {{ veterinaria?.nombre || 'Centro Veterinario' }}.</p>
+  <a href="#inicio">Volver arriba ↑</a>
+</footer>
+
+<button type="button" class="chat-launcher" (click)="chatOpen = !chatOpen" [attr.aria-expanded]="chatOpen" aria-label="Abrir asistente virtual">
+  <span aria-hidden="true">{{ chatOpen ? '×' : '✳' }}</span>
+</button>
+@if (chatOpen) {
+  <aside class="chat-panel" aria-label="Asistente virtual">
+    <div class="chat-header"><div><span class="chat-avatar">✳</span><div><strong>Asistente virtual</strong><small>{{ veterinaria?.nombre || 'Centro Veterinario' }}</small></div></div><button type="button" (click)="chatOpen = false" aria-label="Cerrar chat">×</button></div>
+    <div class="chat-messages" aria-live="polite">
+      @for (message of chatMessages; track $index) {
+        <p class="chat-bubble" [class.from-user]="message.role === 'user'">{{ message.content }}</p>
+      }
+      @if (chatSending) { <p class="chat-bubble typing">Escribiendo…</p> }
+      @if (chatError) { <p class="chat-error" role="alert">{{ chatError }}</p> }
+    </div>
+    <form class="chat-form" (ngSubmit)="enviarMensajeChat()">
+      <label class="sr-only" for="chat-message">Escribe tu mensaje</label>
+      <input id="chat-message" name="message" [(ngModel)]="chatInput" [ngModelOptions]="{standalone: true}" placeholder="Escribe tu pregunta…" maxlength="1000" [disabled]="chatSending">
+      <button type="submit" [disabled]="chatSending || !chatInput.trim()" aria-label="Enviar mensaje">↑</button>
+    </form>
+  </aside>
+}
+
+@if (selectedPhoto) {
+  <div class="lightbox" role="dialog" aria-modal="true" [attr.aria-label]="selectedPhoto.titulo" (click)="selectedPhoto = null">
+    <button type="button" aria-label="Cerrar imagen ampliada" (click)="selectedPhoto = null">×</button>
+    <img [src]="selectedPhoto.imageUrl" [alt]="selectedPhoto.descripcion || selectedPhoto.titulo">
+    <p>{{ selectedPhoto.titulo }}</p>
+  </div>
+}
